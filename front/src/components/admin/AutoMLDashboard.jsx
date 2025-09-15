@@ -25,16 +25,6 @@ const Container = styled.div`
     ${colors.light} 50%,
     #f0e6d6 100%
   );
-  padding: 1.5rem;
-
-  /* 모바일 최적화 */
-  @media (max-width: 768px) {
-    padding: 1rem;
-  }
-
-  @media (max-width: 480px) {
-    padding: 0.5rem;
-  }
 `;
 
 const ContentWrapper = styled.div`
