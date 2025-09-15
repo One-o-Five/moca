@@ -19,5 +19,5 @@ export default defineConfig({
       }
     }
   },
-  base: '/moca_deploy'
+  base: '/moca'
 })
