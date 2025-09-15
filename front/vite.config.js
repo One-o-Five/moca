@@ -19,5 +19,5 @@ export default defineConfig({
       }
     }
   },
-  base: '/moca'
+  base: '/moca/'
 })
