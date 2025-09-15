@@ -35,6 +35,7 @@ const WebSocketInitializer = ({ children }) => {
   const { connect, disconnect } = useWebSocket();
 
   useEffect(() => {
+    console.log('Connected!');
     if (user) {
       // 사용자가 로그인한 경우 WebSocket 연결
       connect();
