@@ -670,8 +670,8 @@ const ChatbotWidget = ({ isDevMode = false }) => {
     return axios.create({
       baseURL:
         process.env.NODE_ENV === 'production'
-          ? 'https://moka8.com/'
-          : 'https://moka8.com/',
+          ? 'https://moca8.com/'
+          : 'https://moca8.com/',
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
