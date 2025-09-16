@@ -670,8 +670,8 @@ const ChatbotWidget = ({ isDevMode = false }) => {
     return axios.create({
       baseURL:
         process.env.NODE_ENV === 'production'
-          ? 'https://your-prod-domain'
-          : 'http://localhost:5000',
+          ? 'http://moka-flask.ap-northeast-2.elasticbeanstalk.com/'
+          : 'http://moka-flask.ap-northeast-2.elasticbeanstalk.com/',
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
