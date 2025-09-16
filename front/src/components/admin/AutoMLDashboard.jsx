@@ -542,8 +542,8 @@ const AutoMLDashboard = () => {
   const apiCall = async (endpoint, options = {}) => {
     const baseURL =
       process.env.NODE_ENV === 'development'
-        ? 'http://moka-flask.ap-northeast-2.elasticbeanstalk.com/'
-        : 'http://moka-flask.ap-northeast-2.elasticbeanstalk.com/';
+        ? 'https://moka8.com/'
+        : 'https://moka8.com/';
 
     const response = await fetch(`${baseURL}${endpoint}`, {
       timeout: 30000,
