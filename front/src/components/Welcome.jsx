@@ -10,7 +10,7 @@ const Welcome = () => {
     useEffect( () => {
         const fetchData = async () => {
             try {
-                const res = await axios.get("http://localhost:5000/test");
+                const res = await axios.get("http://moka-flask.ap-northeast-2.elasticbeanstalk.com/test");
                 console.log(res.data);
             } catch (err) {
                 console.error("Flask 연결 오류:", err);
@@ -20,7 +20,7 @@ const Welcome = () => {
         };
         const fetchData2 = async () => {
             try {
-                const res = await axios.post("http://localhost:5000/get_response");
+                const res = await axios.post("http://moka-flask.ap-northeast-2.elasticbeanstalk.com/get_response");
                 console.log(res.data);
             } catch (err) {
                 console.error("ai타고옴?", err);
