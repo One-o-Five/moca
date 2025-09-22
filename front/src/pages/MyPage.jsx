@@ -16,7 +16,7 @@ import Modal from '../components/Modal';
 
 // API base URL (same as in PaymentOptions.jsx)
 const API_BASE_URL =
-    import.meta.env.MODE === "development" ? "http://localhost:8080" : "http://localhost:8080";
+    import.meta.env.MODE === "development" ? "http://mocaapp.net" : "http://mocaapp.net";
 
 // Helper function for date/time formatting
 const formatReservationDateTime = (date, time) => {

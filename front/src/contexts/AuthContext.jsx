@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
   // 토큰 유효성 검증 함수
   const validateTokenWithServer = async (token) => {
     try {
-      const response = await fetch('http://localhost:8080/api/auth/validate', {
+      const response = await fetch('http://mocaapp.net/api/auth/validate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -105,7 +105,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (username, password) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/api/auth/login', {
+      const response = await fetch('http://mocaapp.net/api/auth/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -153,7 +153,7 @@ export const AuthProvider = ({ children }) => {
   const register = async (userId, password, userName, birthDate, phoneNumber) => {
     setLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/api/auth/register', {
+      const response = await fetch('http://mocaapp.net/api/auth/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -204,7 +204,7 @@ export const AuthProvider = ({ children }) => {
   const checkUserId = async (userId) => {
     try {
       const response = await fetch(
-        'http://localhost:8080/api/auth/check-userid',
+        'http://mocaapp.net/api/auth/check-userid',
         {
           method: 'POST',
           headers: {

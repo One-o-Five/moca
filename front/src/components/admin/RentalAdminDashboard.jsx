@@ -27,7 +27,7 @@ const RentalAdminDashboard = () => {
   const fetchDashboardStats = async () => {
     try {
       const response = await fetch(
-        'http://localhost:8080/api/rental/admin/dashboard/stats'
+        'http://mocaapp.net/api/rental/admin/dashboard/stats'
       );
       if (!response.ok) throw new Error('대시보드 통계 로드 실패');
       const data = await response.json();
@@ -43,9 +43,9 @@ const RentalAdminDashboard = () => {
     try {
       const [monthlyRes, revenueRes] = await Promise.all([
         fetch(
-          'http://localhost:8080/api/rental/admin/stats/monthly-reservations'
+          'http://mocaapp.net/api/rental/admin/stats/monthly-reservations'
         ),
-        fetch('http://localhost:8080/api/rental/admin/stats/revenue'),
+        fetch('http://mocaapp.net/api/rental/admin/stats/revenue'),
       ]);
 
       if (!monthlyRes.ok || !revenueRes.ok)
@@ -65,7 +65,7 @@ const RentalAdminDashboard = () => {
   const fetchVehicleStats = async () => {
     try {
       const response = await fetch(
-        'http://localhost:8080/api/rental/admin/stats/vehicle-types'
+        'http://mocaapp.net/api/rental/admin/stats/vehicle-types'
       );
       if (!response.ok) throw new Error('차량 통계 로드 실패');
       const data = await response.json();
@@ -80,7 +80,7 @@ const RentalAdminDashboard = () => {
   const fetchRegionStats = async () => {
     try {
       const response = await fetch(
-        'http://localhost:8080/api/rental/admin/stats/regions'
+        'http://mocaapp.net/api/rental/admin/stats/regions'
       );
       if (!response.ok) throw new Error('지역 통계 로드 실패');
       const data = await response.json();

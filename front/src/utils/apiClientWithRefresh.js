@@ -1,7 +1,7 @@
 // src/utils/apiClientWithRefresh.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:8080';
+const API_BASE_URL = 'http://mocaapp.net';
 
 const apiClient = axios.create({
   baseURL: API_BASE_URL,
