@@ -15,8 +15,8 @@ function PaymentResult() {
   // API base URL (same as in PaymentOptions.jsx)
   const API_BASE_URL =
     import.meta.env.MODE === 'development'
-      ? 'http://mocaapp.net'
-      : 'http://mocaapp.net';
+      ? 'https://mocaapp.net'
+      : 'https://mocaapp.net';
 
   // ✅ iframe으로 열렸다면 상위(top)로 탈출해서 중복 헤더 제거!
   useEffect(() => {

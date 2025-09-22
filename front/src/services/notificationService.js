@@ -1,5 +1,5 @@
 // src/services/notificationService.js
-const API_BASE_URL = 'http://mocaapp.net/api';
+const API_BASE_URL = 'https://mocaapp.net/api';
 
 class NotificationService {
   /**

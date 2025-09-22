@@ -20,7 +20,7 @@ const NoticesPage = () => {
 
   // 서버에서 공지사항 목록을 가져오는 함수
   const fetchNotices = () => {
-    fetch('http://mocaapp.net/api/notices')
+    fetch('https://mocaapp.net/api/notices')
       .then((response) => {
         if (!response.ok) throw new Error('네트워크 응답 오류');
         return response.json();
@@ -45,7 +45,7 @@ const NoticesPage = () => {
 
   // '확인' 버튼 클릭 시, 수정된 내용을 DB에 저장
   const handleUpdateSubmit = (noticeToUpdate) => {
-    fetch(`http://mocaapp.net/api/notices/${noticeToUpdate.id}`, {
+    fetch(`https://mocaapp.net/api/notices/${noticeToUpdate.id}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -72,7 +72,7 @@ const NoticesPage = () => {
   // '삭제' 버튼 클릭 시
   const handleDelete = (id) => {
     if (window.confirm('정말로 이 공지사항을 삭제하시겠습니까?')) {
-      fetch(`http://mocaapp.net/api/notices/${id}`, {
+      fetch(`https://mocaapp.net/api/notices/${id}`, {
         method: 'DELETE',
         // headers: { 'Authorization': `Bearer ${accessToken}` } // TODO: 실제 인증 토큰 추가
       })

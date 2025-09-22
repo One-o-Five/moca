@@ -78,7 +78,7 @@ const FaqPage = () => {
     /*
     // NOTE: 실제 API 연동 시 아래 주석을 해제하고 위의 useState([])로 변경하세요.
     useEffect(() => {
-        fetch('http://mocaapp.net/api/faqs')
+        fetch('https://mocaapp.net/api/faqs')
             .then(response => response.json())
             .then(data => setFaqs(data))
             .catch(error => console.error("FAQ 로딩 실패:", error));

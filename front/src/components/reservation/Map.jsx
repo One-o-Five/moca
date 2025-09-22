@@ -6,7 +6,7 @@ import {Map, MapMarker, CustomOverlayMap, useKakaoLoader} from "react-kakao-maps
 import ReactSelect from "react-select"; // ✅ react-select
 
 const API_BASE_URL =
-    import.meta.env.MODE === "development" ? "" : "http://mocaapp.net";
+    import.meta.env.MODE === "development" ? "" : "https://mocaapp.net";
 
 const PIN_URL =
     'data:image/svg+xml;utf8,' +
