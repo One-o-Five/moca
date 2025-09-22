@@ -26,7 +26,7 @@ class WebSocketService {
     try {
       // Native WebSocket 사용 (sockjs 대신)
       this.socket = new WebSocket(
-        `ws://localhost:8080/ws/notifications/${userId}`
+        `ws://https://mocaapp.net/ws/notifications/${userId}`
       );
 
       this.socket.onopen = () => {
