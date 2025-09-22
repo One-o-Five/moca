@@ -64,7 +64,7 @@ function HomePage() {
                         <p>{error}</p>
                         <p>
                             <strong>해결 방법:</strong><br/>
-                            1. 백엔드 서버가 실행 중인지 확인 (http://localhost:8080)<br/>
+                            1. 백엔드 서버가 실행 중인지 확인 (http://mocaapp.net)<br/>
                             2. 터미널에서 <code>cd back && ./gradlew bootRun</code> 실행
                         </p>
                     </div>

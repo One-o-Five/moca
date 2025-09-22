@@ -22,7 +22,7 @@ const CarSelect = ({ locationName = "반얀트리 호텔" }) => {
         const fetchCars = async () => {
             try {
                 setLoading(true);
-                const response = await fetch("http://localhost:8080/api/rental/admin/cars");
+                const response = await fetch("http://mocaapp.net/api/rental/admin/cars");
                 if (!response.ok) throw new Error(`Server responded with ${response.status}`);
 
                 const data = await response.json();
@@ -66,7 +66,7 @@ const CarSelect = ({ locationName = "반얀트리 호텔" }) => {
             const date = new Date(info.startDate).toISOString().split('T')[0];
 
             try {
-                const response = await fetch(`http://localhost:8080/api/reservations/reserved-cars?date=${date}`);
+                const response = await fetch(`http://mocaapp.net/api/reservations/reserved-cars?date=${date}`);
                 if (!response.ok) {
                     throw new Error('Failed to fetch reserved cars');
                 }

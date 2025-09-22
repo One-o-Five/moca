@@ -24,7 +24,7 @@ const KakaoCallback = () => {
         hasRun.current = true;
         try {
           const response = await axios.post(
-            'http://localhost:8080/api/auth/kakao/login',
+            'http://mocaapp.net/api/auth/kakao/login',
             { code }
           );
           const { accessToken } = response.data;

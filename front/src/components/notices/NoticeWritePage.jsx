@@ -36,7 +36,7 @@ const NoticeWritePage = () => {
         };
 
         // TODO: 실제 API 호출 시에는 인증 토큰(JWT)을 헤더에 담아 보내야 합니다.
-        fetch('http://localhost:8080/api/notices', {
+        fetch('http://mocaapp.net/api/notices', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
