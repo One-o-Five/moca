@@ -74,34 +74,27 @@ const AdminUserManagement = () => {
     try {
       const token = localStorage.getItem('accessToken');
 
-      // 실제 API 호출 시도
-      try {
-        const response = await fetch('/api/users/admin/all', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+      // 프로덕션에서는 실제 API 서버 URL 사용
+      const response = await fetch('https://mocaapp.net/api/users/admin/all', {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          'Content-Type': 'application/json',
+        },
+      });
 
-        if (response.ok) {
-          const data = await response.json();
-          setUsers(data);
-          return;
-        }
-      } catch (apiError) {
-        console.log('API 호출 실패, Mock 데이터 사용:', apiError);
+      if (response.ok) {
+        const data = await response.json();
+        setUsers(data);
+        return;
       }
-
-      // API 실패 시 Mock 데이터 사용
-      await new Promise((resolve) => setTimeout(resolve, 500)); // 로딩 시뮬레이션
-      const mockData = generateMockUsers();
-      setUsers(mockData);
-    } catch (err) {
-      setError('사용자 목록을 불러오는데 실패했습니다.');
-      console.error('Error fetching users:', err);
-    } finally {
-      setLoading(false);
+    } catch (apiError) {
+      console.log('API 호출 실패, Mock 데이터 사용:', apiError);
     }
+
+    // API 실패 시 Mock 데이터 사용 (무한 재시도 방지)
+    const mockData = generateMockUsers();
+    setUsers(mockData);
+    setLoading(false);
   };
 
   // 사용자 역할 변경 (기존 로직 + 실제 API 대비)
@@ -111,14 +104,17 @@ const AdminUserManagement = () => {
 
       // 실제 API 호출 시도
       try {
-        const response = await fetch(`/api/users/admin/${userId}/role`, {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ role: newRole }),
-        });
+        const response = await fetch(
+          `https://mocaapp.net/api/users/admin/${userId}/role`,
+          {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ role: newRole }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error('역할 변경 API 호출 실패');
@@ -157,13 +153,16 @@ const AdminUserManagement = () => {
 
       // 실제 API 호출 시도
       try {
-        const response = await fetch(`/api/users/admin/${userId}`, {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `https://mocaapp.net/api/users/admin/${userId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error('사용자 삭제 API 호출 실패');
