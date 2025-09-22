@@ -52,8 +52,8 @@ const AdminReservationManagement = () => {
 
       const url =
         statusFilter === 'ALL'
-          ? `/api/reservations/admin/all`
-          : `/api/reservations/admin/all?status=${statusFilter}`;
+          ? `http://mocaapp.net/api/reservations/admin/all`
+          : `http://mocaapp.net/api/reservations/admin/all?status=${statusFilter}`;
 
       const response = await fetch(url, {
         method: 'GET',
@@ -85,7 +85,7 @@ const AdminReservationManagement = () => {
     try {
       const token = localStorage.getItem('accessToken');
       const response = await fetch(
-        `/api/reservations/admin/${reservationId}/status?status=${newStatus}`,
+        `http://mocaapp.net/api/reservations/admin/${reservationId}/status?status=${newStatus}`,
         {
           method: 'PUT',
           headers: {
@@ -128,7 +128,7 @@ const AdminReservationManagement = () => {
     try {
       const token = localStorage.getItem('accessToken');
       const response = await fetch(
-        `/api/reservations/admin/${reservationId}`,
+        `http://mocaapp.net/api/reservations/admin/${reservationId}`,
         {
           method: 'DELETE',
           headers: {
