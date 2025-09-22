@@ -23,7 +23,7 @@ app = Flask(__name__)
 
 # --- CORS 설정 (수정됨) ---
 CORS(app, 
-     origins=["http://localhost:3000", "http://127.0.0.1:3000"],  # React 개발 서버
+     origins=["https://one-o-five.github.io/moca", "http://127.0.0.1:3000"],  # React 개발 서버
      methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
      allow_headers=["Content-Type", "Authorization"],
      supports_credentials=True)
@@ -654,3 +654,4 @@ if __name__ == "__main__":
     print(f"🤖 AutoML 통계: {ml_manager.get_model_stats()}")
     print("🌐 CORS 설정: localhost:3000, 127.0.0.1:3000 허용")
     app.run(host="0.0.0.0", port=5000, debug=True)
+
