@@ -3,7 +3,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import Modal from '../Modal'; // 경로가 맞는지 확인해주세요.
 
-const KAKAO_PAY_READY_API_URL = 'http://mocaapp.net/api/kakaopay/ready';
+const KAKAO_PAY_READY_API_URL = 'https://mocaapp.net/api/kakaopay/ready';
 
 // 모달의 컨텐츠 영역 스타일을 확장하여 너비를 조절합니다.
 const PaymentModalContent = styled.div`

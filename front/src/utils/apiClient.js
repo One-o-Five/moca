@@ -1,7 +1,7 @@
 // src/utils/apiClient.js
 import axios from 'axios';
 
-const API_BASE_URL = 'http://mocaapp.net';
+const API_BASE_URL = 'https://mocaapp.net';
 
 // axios 인스턴스 생성
 const apiClient = axios.create({
