@@ -670,8 +670,8 @@ const ChatbotWidget = ({ isDevMode = false }) => {
     return axios.create({
       baseURL:
         process.env.NODE_ENV === 'production'
-          ? 'https://your-prod-domain'
-          : 'http://localhost:5000',
+          ? 'https://moca8.com/'
+          : 'https://moca8.com/',
       timeout: 10000,
       headers: {
         'Content-Type': 'application/json',
@@ -745,7 +745,7 @@ const ChatbotWidget = ({ isDevMode = false }) => {
     appendToChat(userMessage);
     setInput('');
     setIsLoading(true);
-
+  console.log("send..")
     try {
       const res = await api.post('/get_response', {
         message: userMessage.text,

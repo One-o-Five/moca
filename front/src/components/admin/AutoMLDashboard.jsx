@@ -25,12 +25,16 @@ const Container = styled.div`
     ${colors.light} 50%,
     #f0e6d6 100%
   );
-  padding: 1.5rem;
 `;
 
 const ContentWrapper = styled.div`
   max-width: 1400px;
   margin: 0 auto;
+
+  /* 모바일에서는 최대 너비 제한 없음 */
+  @media (max-width: 768px) {
+    max-width: none;
+  }
 `;
 
 const Card = styled.div`
@@ -45,11 +49,30 @@ const Card = styled.div`
     box-shadow: 0 8px 30px rgba(164, 117, 81, 0.15);
     transform: translateY(-2px);
   }
+
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    padding: 1rem;
+    border-radius: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+  }
 `;
 
 const HeaderCard = styled(Card)`
   margin-bottom: 2rem;
   background: linear-gradient(135deg, ${colors.white} 0%, ${colors.ivory} 100%);
+
+  @media (max-width: 768px) {
+    margin-bottom: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    margin-bottom: 1rem;
+  }
 `;
 
 const Title = styled.h1`
@@ -64,6 +87,15 @@ const Title = styled.h1`
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 0.5rem;
+
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    font-size: 1.75rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.5rem;
+  }
 `;
 
 const Subtitle = styled.p`
@@ -85,6 +117,34 @@ const Grid = styled.div`
     grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
     margin-bottom: 2rem;
   }
+
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    gap: 1rem;
+
+    &.stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      margin-bottom: 1.5rem;
+    }
+
+    &.main-grid {
+      grid-template-columns: 1fr;
+      margin-bottom: 1.5rem;
+    }
+  }
+
+  @media (max-width: 480px) {
+    gap: 0.75rem;
+
+    &.stats-grid {
+      grid-template-columns: 1fr;
+      margin-bottom: 1rem;
+    }
+
+    &.main-grid {
+      margin-bottom: 1rem;
+    }
+  }
 `;
 
 // 통계 카드 관련 컴포넌트
@@ -99,6 +159,12 @@ const StatCard = styled(Card)`
 const StatCardContent = styled.div`
   display: flex;
   align-items: center;
+
+  /* 모바일에서 세로 배치 */
+  @media (max-width: 480px) {
+    flex-direction: column;
+    text-align: center;
+  }
 `;
 
 const IconWrapper = styled.div`
@@ -116,6 +182,18 @@ const IconWrapper = styled.div`
     font-size: 1.25rem;
     color: white;
   }
+
+  /* 모바일 최적화 */
+  @media (max-width: 480px) {
+    width: 2.5rem;
+    height: 2.5rem;
+    margin-right: 0;
+    margin-bottom: 0.5rem;
+
+    span {
+      font-size: 1rem;
+    }
+  }
 `;
 
 const StatInfo = styled.div`
@@ -132,10 +210,19 @@ const StatLabel = styled.p`
 `;
 
 const StatValue = styled.p`
-  font-size: 2rem;
+  font-size: 1.75rem;
   font-weight: 700;
-  color: ${(props) => props.color || colors.text};
-  margin-bottom: 0.25rem;
+  color: ${colors.text};
+  margin: 0.25rem 0;
+
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    font-size: 1.5rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1.25rem;
+  }
 `;
 
 const StatUnit = styled.p`
@@ -164,12 +251,23 @@ const ProgressFill = styled.div`
 
 // 섹션 헤더
 const SectionHeader = styled.h2`
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: ${colors.text};
-  margin-bottom: 1.5rem;
   display: flex;
   align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: ${colors.text};
+  margin-bottom: 1.5rem;
+
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    font-size: 1.125rem;
+    margin-bottom: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    font-size: 1rem;
+    margin-bottom: 0.75rem;
+  }
 `;
 
 const SectionIcon = styled.span`
@@ -188,33 +286,73 @@ const SectionIcon = styled.span`
 
 // 버튼
 const Button = styled.button`
-  background: ${(props) =>
-    props.gradient ||
-    `linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`};
-  color: white;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
   border: none;
   border-radius: 0.75rem;
-  padding: ${(props) =>
-    props.size === 'large' ? '1rem 1.5rem' : '0.75rem 1rem'};
-  font-weight: 600;
-  font-size: ${(props) => (props.size === 'large' ? '1rem' : '0.875rem')};
-  cursor: pointer;
   transition: all 0.2s ease;
-  box-shadow: 0 4px 12px rgba(164, 117, 81, 0.3);
+  cursor: pointer;
+  text-decoration: none;
 
-  &:hover:not(:disabled) {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(164, 117, 81, 0.4);
-  }
+  ${(props) => {
+    const baseSize = props.size === 'large' ? '1rem' : '0.875rem';
+    const basePadding =
+      props.size === 'large' ? '0.875rem 1.5rem' : '0.625rem 1rem';
 
-  &:disabled {
-    background: #9ca3af;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-  }
+    return `
+      font-size: ${baseSize};
+      padding: ${basePadding};
+      
+      /* 모바일 최적화 */
+      @media (max-width: 480px) {
+        font-size: ${props.size === 'large' ? '0.875rem' : '0.75rem'};
+        padding: ${
+          props.size === 'large' ? '0.75rem 1.25rem' : '0.5rem 0.875rem'
+        };
+      }
+    `;
+  }}
 
-  width: ${(props) => (props.fullWidth ? '100%' : 'auto')};
+  ${(props) => (props.fullWidth ? 'width: 100%;' : '')}
+
+  ${(props) => {
+    if (props.disabled) {
+      return `
+        background: #f3f4f6;
+        color: #9ca3af;
+        cursor: not-allowed;
+      `;
+    }
+
+    switch (props.variant) {
+      case 'secondary':
+        return `
+          background: ${colors.light};
+          color: ${colors.primary};
+          border: 1px solid ${colors.sand};
+          &:hover { background: ${colors.sand}; }
+        `;
+      case 'danger':
+        return `
+          background: ${colors.error};
+          color: white;
+          &:hover { background: #dc2626; }
+        `;
+      default:
+        return `
+          background: linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%);
+          color: white;
+          &:hover { 
+            background: linear-gradient(135deg, ${colors.secondary} 0%, #6d4c41 100%);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(164, 117, 81, 0.3);
+          }
+        `;
+    }
+  }}
 `;
 
 // 상태 배지
@@ -237,6 +375,12 @@ const StatusBadge = styled.span`
       : props.type === 'error'
       ? '#991b1b'
       : '#1e40af'};
+
+  /* 모바일 최적화 */
+  @media (max-width: 480px) {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.625rem;
+  }
 `;
 
 // 테이블 관련
@@ -244,6 +388,25 @@ const TableContainer = styled.div`
   overflow-x: auto;
   border-radius: 0.75rem;
   border: 1px solid ${colors.sand};
+
+  /* 모바일 스크롤 개선 */
+  @media (max-width: 768px) {
+    -webkit-overflow-scrolling: touch;
+
+    /* 스크롤바 스타일링 */
+    &::-webkit-scrollbar {
+      height: 4px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: ${colors.light};
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: ${colors.sand};
+      border-radius: 2px;
+    }
+  }
 `;
 
 const Table = styled.table`
@@ -263,6 +426,7 @@ const TableHeaderCell = styled.th`
   color: #374151;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+  white-space: nowrap;
 
   &:first-child {
     border-top-left-radius: 0.75rem;
@@ -271,14 +435,16 @@ const TableHeaderCell = styled.th`
   &:last-child {
     border-top-right-radius: 0.75rem;
   }
-`;
 
-const TableRow = styled.tr`
-  border-bottom: 1px solid ${colors.sand};
-  transition: background-color 0.2s ease;
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+    font-size: 0.625rem;
+  }
 
-  &:hover {
-    background-color: ${colors.ivory};
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.5rem;
   }
 `;
 
@@ -292,6 +458,21 @@ const TableCell = styled.td`
     background: ${colors.light};
     border-radius: 0.5rem;
     font-weight: 600;
+  }
+
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    padding: 0.75rem 1rem;
+    font-size: 0.75rem;
+  }
+
+  @media (max-width: 480px) {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.625rem;
+
+    &.session-id {
+      font-size: 0.5rem;
+    }
   }
 `;
 
@@ -361,8 +542,8 @@ const AutoMLDashboard = () => {
   const apiCall = async (endpoint, options = {}) => {
     const baseURL =
       process.env.NODE_ENV === 'development'
-        ? 'http://localhost:5000'
-        : 'https://YOUR-PROD-DOMAIN';
+        ? 'https://moca8.com/'
+        : 'https://moca8.com/';
 
     const response = await fetch(`${baseURL}${endpoint}`, {
       timeout: 30000,

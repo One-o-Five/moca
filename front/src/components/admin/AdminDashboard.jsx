@@ -136,6 +136,7 @@ const StyledNavLink = styled(NavLink)`
 
 const MobileContent = styled.div`
   flex: 1;
+  padding: 16px;
   overflow-y: auto;
   background: #f7f5f3; /* Moca: Light Background */
 `;
