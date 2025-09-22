@@ -8,12 +8,12 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/rental': {
-        target: 'http://mocaapp.net/',
+        target: 'http://mocaapp.net',
         changeOrigin: true,
         secure: false,
       },
       '/api': {
-        target: 'http://mocaapp.net/',
+        target: 'http://mocaapp.net',
         changeOrigin: true,
         secure: false,
       }
