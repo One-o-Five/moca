@@ -31,7 +31,7 @@ public class KakaoPayService {
     private final RestTemplate restTemplate;
 
     // ✅ 콜백 베이스(URL) 환경변수/설정으로 주입 (기본값은 로컬 백엔드)
-    @Value("${app.backend-callback-base:http://localhost:8080/api/kakaopay}")
+    @Value("${app.backend-callback-base:http://https://mocaapp.net/api/kakaopay}")
     private String callbackBase;
 
     // 동시성 대응 (멀티 인스턴스는 Redis/DB 권장)
