@@ -21,7 +21,7 @@ public class KakaoPayController {
     private final KakaoPayService kakaoPayService;
 
     // ✅ 프론트 주소를 하드코딩 말고 환경변수/설정으로
-    @Value("${app.frontend-origin:http://localhost:3000}")
+    @Value("${app.frontend-origin:https://one-o-five.github.io/moca}")
     private String frontendOrigin;
 
     // ✅ 프론트 결과 경로를 한 군데서 바꿀 수 있게 상수로

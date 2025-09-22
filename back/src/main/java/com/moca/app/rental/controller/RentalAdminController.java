@@ -15,7 +15,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/rental/admin")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "https://one-o-five.github.io/moca")
 public class RentalAdminController {
 
     private final RentalAdminService rentalAdminService;
