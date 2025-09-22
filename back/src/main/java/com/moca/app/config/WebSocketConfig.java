@@ -18,6 +18,6 @@ public class WebSocketConfig implements WebSocketConfigurer {
     @Override
     public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
         registry.addHandler(notificationWebSocketHandler, "/ws/notifications/{userId}")
-                .setAllowedOrigins("http://localhost:3000"); // SockJS 제거, Native WebSocket만 사용
+                .setAllowedOrigins("https://one-o-five.github.io/moca"); // SockJS 제거, Native WebSocket만 사용
     }
 }

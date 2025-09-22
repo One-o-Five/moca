@@ -6,7 +6,7 @@ const KakaoLoginButton = ({ redirectPath = "/auth/kakao/callback" }) => {
     const [isLoading, setIsLoading] = useState(false);
 
     const KAKAO_REST_API_KEY = "8232a2b7504ba934a6dacac363619fa8";
-    const KAKAO_REDIRECT_URI = "http://localhost:3000/auth/kakao/callback/test";
+    const KAKAO_REDIRECT_URI = "https://one-o-five.github.io/moca/auth/kakao/callback/test";
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${KAKAO_REST_API_KEY}&redirect_uri=${KAKAO_REDIRECT_URI}&response_type=code`;
 
     const handleLogin = () => {
