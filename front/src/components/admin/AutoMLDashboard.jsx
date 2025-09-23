@@ -448,6 +448,27 @@ const TableHeaderCell = styled.th`
   }
 `;
 
+// ✅ 여기가 누락된 TableRow 컴포넌트입니다!
+const TableRow = styled.tr`
+  border-bottom: 1px solid ${colors.sand};
+  transition: all 0.2s ease;
+
+  &:hover {
+    background-color: ${colors.light};
+  }
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  /* 모바일 최적화 */
+  @media (max-width: 768px) {
+    &:hover {
+      background-color: transparent;
+    }
+  }
+`;
+
 const TableCell = styled.td`
   padding: 1rem 1.5rem;
   font-size: 0.875rem;
@@ -740,10 +761,10 @@ const AutoMLDashboard = () => {
           <StatCard borderColor="#f59e0b" hoverColor="#d97706">
             <StatCardContent>
               <IconWrapper gradient="linear-gradient(135deg, #f59e0b 0%, #d97706 100%)">
-                <span>📝</span>
+                <span>📈</span>
               </IconWrapper>
               <StatInfo>
-                <StatLabel>피드백 수</StatLabel>
+                <StatLabel>피드백 데이터</StatLabel>
                 <StatValue>{stats?.feedback_count || 0}</StatValue>
                 <StatUnit color="#f59e0b">개 수집</StatUnit>
               </StatInfo>
@@ -751,106 +772,37 @@ const AutoMLDashboard = () => {
           </StatCard>
         </Grid>
 
-        {/* 모델 상태 및 성능 */}
+        {/* 메인 그리드 */}
         <Grid className="main-grid">
           <Card>
             <SectionHeader>
-              <SectionIcon
-                gradient={`linear-gradient(135deg, ${colors.primary} 0%, ${colors.secondary} 100%)`}
-              >
+              <SectionIcon gradient="linear-gradient(135deg, #ef4444 0%, #dc2626 100%)">
                 🤖
               </SectionIcon>
-              모델 상태
+              모델 재훈련
             </SectionHeader>
-
             <div style={{ marginBottom: '1.5rem' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '1rem',
-                  background: colors.ivory,
-                  borderRadius: '0.75rem',
-                  marginBottom: '1rem',
-                }}
-              >
-                <span style={{ fontWeight: '500', color: colors.text }}>
-                  모델 로드 상태
-                </span>
-                <StatusBadge type={stats?.model_loaded ? 'success' : 'error'}>
-                  {stats?.model_loaded ? '✅ 정상 작동' : '❌ 오류'}
-                </StatusBadge>
-              </div>
-
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                  padding: '1rem',
-                  background: colors.ivory,
-                  borderRadius: '0.75rem',
-                }}
-              >
-                <span style={{ fontWeight: '500', color: colors.text }}>
-                  벡터라이저 상태
-                </span>
-                <StatusBadge
-                  type={stats?.vectorizer_loaded ? 'success' : 'error'}
-                >
-                  {stats?.vectorizer_loaded ? '✅ 정상 작동' : '❌ 오류'}
-                </StatusBadge>
-              </div>
+              <p style={{ color: '#6b7280', fontSize: '0.875rem' }}>
+                새로운 데이터로 AI 모델을 재훈련하여 성능을 향상시킵니다.
+              </p>
             </div>
-
             <Button
-              fullWidth
-              size="large"
               onClick={handleRetrain}
               disabled={retraining}
+              size="large"
+              fullWidth
             >
-              {retraining ? '🔄 재훈련 진행 중...' : '🚀 수동 재훈련 시작'}
+              {retraining ? '재훈련 중...' : '🚀 모델 재훈련 시작'}
             </Button>
           </Card>
 
           <Card>
             <SectionHeader>
-              <SectionIcon gradient="linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)">
+              <SectionIcon gradient="linear-gradient(135deg, #10b981 0%, #059669 100%)">
                 📊
               </SectionIcon>
-              성능 지표
+              성능 가이드
             </SectionHeader>
-
-            <div style={{ marginBottom: '2rem' }}>
-              <div
-                style={{
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  fontSize: '0.875rem',
-                  marginBottom: '0.5rem',
-                }}
-              >
-                <span style={{ fontWeight: '500', color: '#6b7280' }}>
-                  최근 정확도
-                </span>
-                <span
-                  style={{
-                    fontWeight: '700',
-                    color: getAccuracyColor(stats?.recent_accuracy || 0),
-                  }}
-                >
-                  {((stats?.recent_accuracy || 0) * 100).toFixed(1)}%
-                </span>
-              </div>
-              <ProgressBar style={{ height: '0.75rem' }}>
-                <ProgressFill
-                  gradient={getAccuracyGradient(stats?.recent_accuracy || 0)}
-                  width={(stats?.recent_accuracy || 0) * 100}
-                />
-              </ProgressBar>
-            </div>
-
             <div
               style={{
                 display: 'grid',
