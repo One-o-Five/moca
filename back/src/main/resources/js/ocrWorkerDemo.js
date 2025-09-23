@@ -21,7 +21,7 @@ self.onmessage = async (e) => {
 
       try {
         const result = await Promise.race([
-          attemptFetch("http://localhost:80/ocrtest", JSON.stringify(e.data))
+          attemptFetch("https://mocaapp.net/ocrtest", JSON.stringify(e.data))
           //서버에 올리거나 외부에서 접근하기 위해서는 해당 url 변경
         ]);
         let response = await result.json();
