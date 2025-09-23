@@ -3085,87 +3085,81 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   &:last-child {
     border-bottom: none;
   }
-`;function dO(){return c.jsxs(fO,{children:[c.jsxs(pO,{children:[c.jsx(hO,{children:"MOCA 관리자"}),c.jsxs(mO,{children:[c.jsx(zo,{to:"/admin",end:!0,children:"대시보드"}),c.jsx(zo,{to:"/admin/reservations",children:"예약관리"}),c.jsx(zo,{to:"/admin/users",children:"사용자"}),c.jsx(zo,{to:"/admin/vehicles",children:"차량관리"}),c.jsx(zo,{to:"/admin/automl",children:"AutoML"})]})]}),c.jsx(gO,{children:c.jsxs(Sv,{children:[c.jsx(Re,{index:!0,element:c.jsx(Nk,{})}),c.jsx(Re,{path:"reservations",element:c.jsx(Xk,{})}),c.jsx(Re,{path:"users",element:c.jsx(AT,{})}),c.jsx(Re,{path:"vehicles",element:c.jsx(lR,{})}),c.jsx(Re,{path:"automl",element:c.jsx(zR,{})})," "]})})]})}const fO=b.div`
+`;function dO(){return c.jsxs(fO,{children:[c.jsxs(pO,{children:[c.jsx(hO,{children:"MOCA 관리자"}),c.jsxs(mO,{children:[c.jsx(zo,{to:"/admin",end:!0,children:"대시보드"}),c.jsx(zo,{to:"/admin/reservations",children:"예약관리"}),c.jsx(zo,{to:"/admin/users",children:"사용자"}),c.jsx(zo,{to:"/admin/vehicles",children:"차량관리"}),c.jsx(zo,{to:"/admin/automl",children:"AutoML"})]})]}),c.jsx(gO,{children:c.jsxs(Sv,{children:[c.jsx(Re,{index:!0,element:c.jsx(Nk,{})}),c.jsx(Re,{path:"reservations",element:c.jsx(Xk,{})}),c.jsx(Re,{path:"users",element:c.jsx(AT,{})}),c.jsx(Re,{path:"vehicles",element:c.jsx(lR,{})}),c.jsx(Re,{path:"automl",element:c.jsx(zR,{})})]})})]})}const fO=b.div`
   min-height: 100vh;
   background: #f7f5f3; /* Moca: Light Background */
   display: flex;
   flex-direction: column;
 `,pO=b.div`
   background: #ffffff;
-  padding: 16px;
-  box-shadow: 0 4px 12px rgba(164, 117, 81, 0.15); /* Moca: Shadow */
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  border-bottom: 1px solid #e7e0d9; /* Moca: Beige Border */
+  padding: 12px 16px; /* 패딩 줄임 */
+  box-shadow: 0 2px 8px rgba(164, 117, 81, 0.1); /* 그림자 줄임 */
+  position: relative; /* sticky 제거 */
+  z-index: 50; /* z-index 낮춤 */
+  border-bottom: 1px solid #e7e0d9;
 `,hO=b.h1`
-  margin: 0 0 16px 0;
-  color: #5d4037; /* Moca: Dark Brown */
-  font-size: 1.5rem;
+  margin: 0 0 12px 0; /* 여백 줄임 */
+  color: #5d4037;
+  font-size: 1.3rem; /* 폰트 크기 줄임 */
   font-weight: 700;
   text-align: center;
   letter-spacing: 1px;
 `,mO=b.nav`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr); /* 첫 번째 줄: 2개 */
-  grid-template-rows: repeat(3, auto); /* 3줄로 배치 */
-  gap: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px; /* 간격 줄임 */
+  justify-content: center;
 
-  /* 5번째 탭(AutoML)을 중앙에 배치 */
-  & > *:nth-child(5) {
-    grid-column: 1 / -1; /* 전체 너비 사용 */
-    justify-self: center;
-    max-width: 200px;
-  }
-
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(5, 1fr); /* 데스크톱에서는 5개 가로 배치 */
-    grid-template-rows: auto;
-
-    & > *:nth-child(5) {
-      grid-column: auto;
-      justify-self: stretch;
-      max-width: none;
-    }
+  @media (max-width: 480px) {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 4px;
   }
 `,zo=b(Mv)`
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 12px 8px;
-  color: #795548; /* Moca: Medium Brown */
+  padding: 8px 12px; /* 패딩 대폭 줄임 */
+  color: #795548;
   background: transparent;
   border: 1px solid transparent;
-  border-radius: 8px;
+  border-radius: 6px; /* 보더 반경 줄임 */
   text-decoration: none;
   font-weight: 500;
-  font-size: 14px;
+  font-size: 13px; /* 폰트 크기 줄임 */
   transition: all 0.2s ease;
   text-align: center;
   white-space: nowrap;
+  min-width: 65px; /* 최소 너비 설정 */
 
   &:hover {
-    background: #f5f1ed; /* Moca: Light Brown BG */
-    color: #5d4037; /* Moca: Dark Brown */
-    border-color: #e7e0d9; /* Moca: Beige Border */
+    background: #f5f1ed;
+    color: #5d4037;
+    border-color: #e7e0d9;
   }
 
   &.active {
-    background: #a47551; /* Moca: Medium-Dark Brown */
+    background: #a47551;
     color: #ffffff;
-    border-color: #8d5f3b; /* Moca: Darker Brown */
-    box-shadow: 0 2px 8px rgba(164, 117, 81, 0.3);
+    border-color: #8d5f3b;
+    box-shadow: 0 1px 4px rgba(164, 117, 81, 0.3); /* 그림자 줄임 */
   }
 
   &:active {
     transform: translateY(1px);
     transition-duration: 0.05s;
   }
+
+  @media (max-width: 480px) {
+    padding: 10px 6px;
+    font-size: 12px;
+    min-width: auto;
+  }
 `,gO=b.div`
   flex: 1;
   padding: 16px;
   overflow-y: auto;
-  background: #f7f5f3; /* Moca: Light Background */
+  background: #f7f5f3;
 `;b.div`
   display: flex;
   flex-direction: column;
@@ -3173,15 +3167,15 @@ In order to be iterable, non-array objects must have a [Symbol.iterator]() metho
   justify-content: center;
   height: 60vh;
   text-align: center;
-  color: #795548; /* Moca: Medium Brown */
+  color: #795548;
 
   h2 {
-    color: #5d4037; /* Moca: Dark Brown */
+    color: #5d4037;
     margin-bottom: 16px;
   }
 
   p {
-    color: #8d6e63; /* Moca: Light Brown */
+    color: #8d6e63;
   }
 `;const xO=()=>c.jsx(dO,{}),hh=({isOpen:n,onClose:a,children:i})=>{if(!n)return null;const l=s=>{s.target===s.currentTarget&&a()};return c.jsx(bO,{onClick:l,children:c.jsxs(vO,{children:[c.jsx(yO,{onClick:a,children:c.jsx(O3,{size:24})}),i]})})},bO=b.div`
     position: fixed;
