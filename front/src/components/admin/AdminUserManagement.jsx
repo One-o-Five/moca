@@ -76,12 +76,15 @@ const AdminUserManagement = () => {
 
       // 실제 API 호출 시도
       try {
-        const response = await fetch('/api/users/admin/all', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          'https://mocaapp.net/api/users/admin/all',
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         if (response.ok) {
           const data = await response.json();
@@ -111,14 +114,17 @@ const AdminUserManagement = () => {
 
       // 실제 API 호출 시도
       try {
-        const response = await fetch(`/api/users/admin/${userId}/role`, {
-          method: 'PUT',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ role: newRole }),
-        });
+        const response = await fetch(
+          `https://mocaapp.net/api/users/admin/${userId}/role`,
+          {
+            method: 'PUT',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ role: newRole }),
+          }
+        );
 
         if (!response.ok) {
           throw new Error('역할 변경 API 호출 실패');
@@ -157,13 +163,16 @@ const AdminUserManagement = () => {
 
       // 실제 API 호출 시도
       try {
-        const response = await fetch(`/api/users/admin/${userId}`, {
-          method: 'DELETE',
-          headers: {
-            Authorization: `Bearer ${token}`,
-            'Content-Type': 'application/json',
-          },
-        });
+        const response = await fetch(
+          `https://mocaapp.net/api/users/admin/${userId}`,
+          {
+            method: 'DELETE',
+            headers: {
+              Authorization: `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+          }
+        );
 
         if (!response.ok) {
           throw new Error('사용자 삭제 API 호출 실패');

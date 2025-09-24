@@ -189,7 +189,7 @@ function OcrPage() {
 
   const sendImageToServer = async (jsonData) => {
     try {
-      const response = await fetch('/api/ocr', {
+      const response = await fetch('https://mocaapp.net/api/ocr', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(jsonData),

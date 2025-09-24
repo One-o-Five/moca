@@ -31,6 +31,7 @@ public class KakaoPayService {
     private final RestTemplate restTemplate;
 
     // ✅ 콜백 베이스(URL) 환경변수/설정으로 주입 (기본값은 로컬 백엔드)
+
     @Value("${app.backend-callback-base:https://mocaapp.net/api/kakaopay}")
     private String callbackBase;
 
@@ -45,13 +46,6 @@ public class KakaoPayService {
     }
 
     public KakaoPayReadyResponse ready(KakaoPayReadyRequest requestDto) {
-        // ===================== 디버깅 코드 추가 =====================
-        log.info("--- KAKAO PAY DEBUG START ---");
-        log.info("Admin Key: {}", kakaoPayProperties.getAdminKey());
-        log.info("CID: {}", kakaoPayProperties.getCid());
-        log.info("Host: {}", kakaoPayProperties.getHost());
-        log.info("--- KAKAO PAY DEBUG END ---");
-        // ==========================================================
 
         String url = kakaoPayProperties.getHost() + "/v1/payment/ready";
 

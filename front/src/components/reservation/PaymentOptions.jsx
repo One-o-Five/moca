@@ -45,7 +45,7 @@ const PaymentOptions = () => {
     const isMobile = useMemo(() => /Mobi|Android/i.test(navigator.userAgent), []);
 
     const API_BASE_URL =
-        import.meta.env.MODE === "development" ? "http://mocaapp.net" : "http://mocaapp.net";
+        import.meta.env.MODE === "development" ? "https://mocaapp.net" : "https://mocaapp.net";
 
     const handleSelect = async (m) => {
         setSelectedId(m.id);

@@ -70,7 +70,7 @@ const AdminVehicleManagement = () => {
       if (typeFilter !== 'ALL') params.append('type', typeFilter);
       if (searchTerm) params.append('search', searchTerm);
 
-      const url = `/api/cars${
+      const url = `https://mocaapp.net/api/cars${
         params.toString() ? '?' + params.toString() : ''
       }`;
       const response = await fetch(url);
