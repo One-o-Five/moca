@@ -1,327 +1,148 @@
-# Moca Project
+# MOCA — AIチャットボット搭載 車両レンタル予約サービス
 
-Moca는 차량 렌탈 서비스를 위한 종합 웹 애플리케이션입니다. 사용자들이 편리하게 차량을 예약하고 관리할 수 있는 통합 플랫폼을 제공하며, AI 챗봇을 통한 고객 지원까지 포함합니다.
+車両の検索・予約・決済から、運転免許証の認証、AIチャットボットによる問い合わせ対応、管理者向けの運用機能までを備えた車両レンタル予約Webサービスです。
 
-## 🚀 주요 기능
+> **現在の状態**：AWS上にサービス全体をデプロイして公開していましたが、現在はコストの都合によりサーバーを停止しています。動作の様子は下記のスクリーンショット・デモ動画をご覧ください。
 
-### 👤 사용자 기능
-- **카카오 소셜 로그인** - 간편한 소셜 로그인
-- **차량 예약 시스템** - 직관적인 예약 인터페이스
-- **보험 선택** - 베이직/스탠다드/프리미엄 보험 옵션
-- **결제 시스템** - 카카오페이 통합 결제
-- **마이페이지** - 예약 현황 조회 및 관리, 예약 취소
-- **면허증 인증** - OCR 기반 자동 인증
-- **AI 챗봇** - 실시간 고객 지원 및 문의 응답
-- **공지사항 및 FAQ** - 최신 정보 확인
+| 項目 | 内容 |
+|---|---|
+| 開発期間 | 2025年8月〜2025年9月（約1か月） |
+| 体制 | 3名（チーム開発） |
+| 担当 | チームリーダー／フルスタック（全体のUI/UXデザイン、DB設計、AIチャットボット、管理者メニュー） |
 
-### 👨‍💼 관리자 기능
-- **관리자 대시보드** - 통합 관리 인터페이스
-- **차량 관리** - 등록, 수정, 삭제
-- **예약 현황 모니터링** - 실시간 예약 상태 확인
-- **면허증 승인 관리** - 사용자 면허증 검토 및 승인
-- **공지사항 관리** - 카테고리별 공지사항 작성, 수정, 삭제
-- **챗봇 학습 데이터 관리** - AI 응답 품질 향상
+## デモ
 
-### 🤖 AI 챗봇 기능
-- **자연어 처리** - Google Gemini API 기반 대화
-- **의도 분류** - 머신러닝 기반 사용자 의도 파악
-- **세션 관리** - 대화 컨텍스트 유지
-- **실시간 응답** - 즉시 고객 문의 처리
-- **성능 모니터링** - 응답 품질 및 정확도 추적
+<!-- スクリーンショットやデモ動画をここに追加 -->
+| トップ・車両予約 | AIチャットボット | 管理者ダッシュボード |
+|---|---|---|
+| ![予約画面](docs/images/reservation.png) | ![チャットボット](docs/images/chatbot.png) | ![管理画面](docs/images/admin.png) |
 
-### 📋 OCR 기능
-- **운전면허증 인식** - 면허 정보 자동 인식
-- **신용카드 인식** - 결제 정보 입력 지원
+デモ動画：（URLを追加）
 
-## 🛠 기술 스택
+## 主な機能
 
-### Backend (Spring Boot)
-- **Framework**: Spring Boot 2.7+
-- **Language**: Java 17
-- **Database**: Oracle Database
-- **Authentication**: JWT, Kakao OAuth 2.0
-- **OCR**: EasyCodef API
+### ユーザー向け
+- **会員登録・ログイン**：ID/パスワード認証、カカオアカウントによるソーシャルログイン（JWT）
+- **車両予約**：地域・車種・日時を指定した車両検索と予約、地図による営業所の表示
+- **保険の選択**：ベーシック／スタンダード／プレミアムの3種類
+- **決済**：カカオペイ連携
+- **運転免許証の認証**：OCRによる免許証情報の自動読み取り
+- **マイページ**：予約状況の確認・キャンセル、プロフィール編集
+- **お知らせ・FAQ**
+- **リアルタイム通知**：WebSocketによる予約状況などの通知
+- **AIチャットボット**：問い合わせへの自動応答（詳細は後述）
 
-### AI Chatbot Backend (Flask)
-- **Framework**: Flask
-- **Language**: Python 3.13
-- **AI**: Google Gemini API (Vertex AI)
-- **ML**: Scikit-learn, TensorFlow
-- **Features**: AutoML, Intent Classification, Session Management
+### 管理者向け
+- **ダッシュボード**：予約数（日別・月別）、売上、地域別・車種別の統計をグラフで表示
+- **車両管理**：登録・編集・削除
+- **予約管理**：予約状況の確認、ステータス更新
+- **ユーザー管理**：権限変更、免許証の承認
+- **お知らせ管理**：カテゴリ別の作成・編集・削除
+- **チャットボット管理**：意図分類モデルの精度・予測履歴の確認、学習データの管理と再学習
 
-### Frontend
-- **Framework**: React 18
-- **Build Tool**: Vite
-- **Styling**: Styled Components
-- **State Management**: Redux Toolkit
-- **Icons**: React Icons, Phosphor Icons
-- **HTTP Client**: Axios
+## AIチャットボットの設計
 
-## 📁 프로젝트 구조
+問い合わせへの応答品質と運用しやすさを両立するため、**ローカルの機械学習モデルとLLM（Google Gemini）を組み合わせたハイブリッド構成**にしました。
+
+```
+ユーザーの質問
+   │
+   ├─▶ ① ローカルMLモデルで意図分類（TF-IDF＋ランダムフォレスト）→ 意図＋信頼度
+   ├─▶ ② Geminiで意図分類（8カテゴリ：予約・料金・利用方法・トラブル・アカウント・挨拶・お礼・その他）
+   │
+   ▼
+③ 最終的な意図の決定
+   ・ML信頼度 > 0.7         → MLの結果を採用
+   ・0.5 < ML信頼度 ≤ 0.7   → MLとGeminiの結果が一致すれば採用
+   ・それ以外               → Geminiの結果を採用
+   │
+   ▼
+④ 意図ごとの回答ガイドライン＋会話履歴をプロンプトに組み込み、Geminiで回答を生成
+```
+
+- **意図に応じた回答の出し分け**：意図ごとに回答方針（例：予約なら車種・地域・日時を確認する、トラブルならまず共感を示して状況を確認する）を定義し、プロンプトに組み込むことで、回答のぶれを抑えています。
+- **フィードバックによる継続的な改善**：分類が誤っていた場合はフィードバックAPIで正しい意図を学習データに追加し、モデルを再学習します。管理画面からの手動再学習と、定期的な自動再学習の両方に対応しています。
+- **会話セッション管理**：セッションごとに直近20件の会話を保持し、文脈を踏まえた回答を生成します。2時間操作がないセッションは自動で破棄します。
+- **精度のモニタリング**：予測結果（ML・Gemini・最終判定とその根拠）を記録し、管理画面で最近の精度を確認できます。
+
+## 技術スタック
+
+| 領域 | 技術 |
+|---|---|
+| フロントエンド | React 19, Vite, React Router, styled-components, Axios, Recharts, Kakao Maps SDK |
+| バックエンド | Java 17, Spring Boot 3, Spring Security, Spring Data JPA, JWT, WebSocket |
+| AIチャットボット | Python, Flask, Google Gemini API（Vertex AI）, scikit-learn |
+| データベース | Oracle Database |
+| 外部API | カカオログイン, カカオペイ, EasyCodef（OCR） |
+| インフラ・CI/CD | AWS（S3 ほか）, GitHub Actions |
+
+## システム構成
+
+```
+[React (SPA)] ──REST/WebSocket──▶ [Spring Boot API] ──▶ [Oracle DB]
+      │                                 │
+      │                                 ├─▶ カカオログイン / カカオペイ
+      │                                 └─▶ EasyCodef（OCR）
+      │
+      └──REST──▶ [Flask チャットボットサーバー] ──▶ [Gemini API (Vertex AI)]
+                        └─ ローカルMLモデル（scikit-learn）
+```
+
+## ディレクトリ構成
 
 ```
 moca/
-├── back/                           # Spring Boot 백엔드
-│   ├── src/main/java/com/moca/app/
-│   │   ├── config/                 # 설정 클래스
-│   │   ├── controller/             # REST API 컨트롤러
-│   │   ├── service/                # 비즈니스 로직
-│   │   ├── login/                  # 인증 관련
-│   │   └── ocr/                    # OCR 관련
-│   ├── src/main/resources/
-│   │   ├── db/                     # 데이터베이스 스크립트
-│   │   └── js/                     # JavaScript 유틸리티
-│   └── src/test/                   # 테스트 코드
-├── chatbot-back/                   # Flask AI 챗봇 백엔드
-│   ├── app.py                      # Flask 애플리케이션
-│   ├── requirements.txt            # Python 의존성
-│   ├── models/                     # ML 모델 저장소
-│   └── templates/                  # HTML 템플릿
-├── front/                          # React 프론트엔드
-│   ├── src/
-│   │   ├── components/             # React 컴포넌트
-│   │   │   ├── notices/            # 공지사항 컴포넌트
-│   │   │   ├── reservation/        # 예약 관련 컴포넌트
-│   │   │   └── chatbot/            # 챗봇 컴포넌트
-│   │   ├── pages/                  # 페이지 컴포넌트
-│   │   ├── contexts/               # React Context
-│   │   └── utils/                  # 유틸리티 함수
-│   └── public/                     # 정적 파일
-└── README.md
+├── back/            # Spring Boot バックエンド（REST API・認証・決済・OCR・通知）
+│   └── src/main/resources/db/   # テーブル作成用SQL
+├── chatbot-back/    # Flask AIチャットボットサーバー
+│   └── models/      # 学習済み意図分類モデル
+└── front/           # React フロントエンド
 ```
 
-## ⚙️ 설치 및 실행
+## ローカルでの実行方法
 
-### 사전 요구사항
-- Java 17 이상
-- Node.js 16 이상
-- Python 3.13
-- Oracle Database
-- Git
+> APIキーや認証情報はリポジトリに含めていません。各自で取得し、環境変数または設定ファイルで指定してください。
 
-### 1. 프로젝트 클론
-```bash
-git clone <repository-url>
-cd moca
-```
+### 必要な環境
+- Java 17 以上 / Node.js 20 以上 / Python 3.13 / Oracle Database
 
-### 2. 데이터베이스 설정
-Oracle 데이터베이스에 다음 스크립트를 실행하여 테이블을 생성합니다:
-```bash
-# 렌탈 시스템 테이블 생성
-@back/src/main/resources/db/rental.sql
+### 1. データベース
+`back/src/main/resources/db/` のSQLを実行してテーブルを作成します。
 
-# 공지사항 테이블 생성
-@back/src/main/resources/db/notices.sql
-```
-
-### 3. Spring Boot 백엔드 설정
+### 2. バックエンド（Spring Boot）
 ```bash
 cd back
-
-# application.properties 파일 설정
 cp src/main/resources/application.properties.example src/main/resources/application.properties
-```
-
-`application.properties` 파일에서 다음 설정을 수정하세요:
-```properties
-# 데이터베이스 설정
-spring.datasource.url=jdbc:oracle:thin:@localhost:1521:xe
-spring.datasource.username=your_username
-spring.datasource.password=your_password
-
-# 카카오 OAuth 설정
-kakao.client.id=your_kakao_client_id
-kakao.client.secret=your_kakao_client_secret
-
-# JWT 설정
-jwt.secret=your_jwt_secret_key
-```
-
-### 4. EasyCodef OCR API 설정
-`back/src/main/java/com/moca/app/ocr/api/EasyCodefClientInfo.java` 파일에서 API 정보를 설정하세요:
-```java
-public static final String CLIENT_ID = "your_codef_client_id";
-public static final String CLIENT_SECRET = "your_codef_client_secret";
-public static final String PUBLIC_KEY = "your_codef_public_key";
-```
-
-### 5. Flask 챗봇 백엔드 설정
-```bash
-cd chatbot-back
-
-# Python 가상환경 생성 및 활성화
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-# venv\Scripts\activate  # Windows
-
-# 의존성 설치
-pip install -r requirements.txt
-
-# Google Cloud 인증 설정
-# application_default_credentials.json 파일을 chatbot-back/ 디렉토리에 배치
-```
-
-### 6. 백엔드 실행
-
-**Spring Boot 서버 실행 (포트 8080)**
-```bash
-cd back
+# DB接続情報、カカオ OAuth、JWT シークレットなどを設定
 ./gradlew bootRun
 ```
 
-**Flask 챗봇 서버 실행 (포트 5000)**
+### 3. チャットボット（Flask）
 ```bash
 cd chatbot-back
+python -m venv venv
+source venv/bin/activate   # Windows: venv\Scripts\activate
+pip install -r requirements.txt
+export GOOGLE_APPLICATION_CREDENTIALS=/path/to/credentials.json   # Google Cloud の認証情報
 python app.py
 ```
 
-### 7. 프론트엔드 실행
-새 터미널에서:
+### 4. フロントエンド（React）
 ```bash
 cd front
-
-# 의존성 설치
+cp .env.example .env   # カカオマップのアプリキーなどを設定
 npm install
-
-# 개발 서버 실행 (포트 3000)
 npm run dev
 ```
 
-## 🌐 API 엔드포인트
+## 工夫した点・学んだこと
 
-### Spring Boot API (포트 8080)
+- **LLMだけに頼らない意図分類**：LLMによる分類は結果がぶれることがあるため、サービス固有の学習データで信頼度高く判定できる質問はローカルモデルの結果を優先し、判断が難しいものはGeminiの結果を使う構成にしました。
+- **運用しながら改善できる仕組み**：誤分類をフィードバックとして学習データに戻し、再学習できるようにしたことで、リリース後も回答品質を改善し続けられる設計を意識しました。
+- **リーダーとしての進行**：約1か月という短い期間で、3名の担当範囲を整理し、UI/UXデザインやDB設計など全体に関わる部分を自ら担当することで、フロントエンド・バックエンド・チャットボットの開発を並行して進めました。
 
-#### 인증
-- `POST /api/auth/kakao` - 카카오 로그인
-- `POST /api/auth/refresh` - 토큰 갱신
+## 今後の改善点
 
-#### 사용자 관리
-- `GET /api/users/profile` - 사용자 프로필 조회
-- `PUT /api/users/profile` - 사용자 프로필 수정
-
-#### 차량 관리
-- `GET /api/cars` - 차량 목록 조회
-- `GET /api/cars/{id}` - 특정 차량 조회
-- `POST /api/cars` - 차량 등록 (관리자)
-- `PUT /api/cars/{id}` - 차량 수정 (관리자)
-- `DELETE /api/cars/{id}` - 차량 삭제 (관리자)
-
-#### 예약 관리
-- `GET /api/reservations` - 예약 목록 조회
-- `GET /api/reservations/my-reservations` - 내 예약 현황 조회
-- `POST /api/reservations` - 예약 생성
-- `PUT /api/reservations/{id}` - 예약 수정
-- `PUT /api/reservations/{id}/cancel` - 예약 취소
-- `DELETE /api/reservations/{id}` - 예약 삭제
-
-#### 면허증 관리
-- `POST /api/licenses` - 면허증 등록
-- `GET /api/licenses/{id}` - 면허증 조회
-- `PUT /api/licenses/{id}/approve` - 면허증 승인 (관리자)
-
-#### OCR
-- `POST /api/ocr/process` - OCR 처리
-
-#### 공지사항
-- `GET /api/notices` - 공지사항 목록 조회
-- `GET /api/notices/{id}` - 특정 공지사항 조회
-- `POST /api/notices` - 공지사항 생성 (관리자)
-- `PUT /api/notices/{id}` - 공지사항 수정 (관리자)
-- `DELETE /api/notices/{id}` - 공지사항 삭제 (관리자)
-
-#### FAQ
-- `GET /api/faqs` - FAQ 목록 조회
-- `GET /api/faqs/{id}` - 특정 FAQ 조회
-
-### Flask 챗봇 API (포트 5000)
-
-#### 챗봇 서비스
-- `GET /` - 챗봇 서버 상태 확인
-- `GET /test` - 테스트 엔드포인트
-- `POST /get_response` - 챗봇 응답 요청
-- `POST /feedback` - 챗봇 응답 피드백
-- `GET /session/{session_id}` - 특정 세션 조회
-- `GET /sessions` - 모든 세션 조회
-
-#### 챗봇 요청 예시
-```json
-{
-  "message": "차량 예약하고 싶어요",
-  "session_id": "optional_session_id"
-}
-```
-
-## 🧪 테스트
-
-### Spring Boot 백엔드 테스트
-```bash
-cd back
-./gradlew test
-```
-
-### React 프론트엔드 테스트
-```bash
-cd front
-npm test
-```
-
-### Flask 챗봇 테스트
-```bash
-cd chatbot-back
-python -m pytest tests/  # 테스트 파일이 있는 경우
-```
-
-## 🚀 배포
-
-### Spring Boot 백엔드 빌드
-```bash
-cd back
-./gradlew build
-
-# JAR 파일 실행
-java -jar build/libs/app-0.0.1-SNAPSHOT.jar
-```
-
-### React 프론트엔드 빌드
-```bash
-cd front
-npm run build
-
-# 빌드된 파일이 dist/ 디렉토리에 생성됩니다
-```
-
-### Flask 챗봇 프로덕션 실행
-```bash
-cd chatbot-back
-
-# Gunicorn을 사용한 프로덕션 실행
-gunicorn -w 4 -b 0.0.0.0:5000 app:app
-```
-
-## 🔧 환경 변수
-
-### Spring Boot 백엔드
-- `DB_URL` - 데이터베이스 URL
-- `DB_USERNAME` - 데이터베이스 사용자명
-- `DB_PASSWORD` - 데이터베이스 비밀번호
-- `KAKAO_CLIENT_ID` - 카카오 클라이언트 ID
-- `KAKAO_CLIENT_SECRET` - 카카오 클라이언트 시크릿
-- `JWT_SECRET` - JWT 비밀키
-- `CODEF_CLIENT_ID` - EasyCodef 클라이언트 ID
-- `CODEF_CLIENT_SECRET` - EasyCodef 클라이언트 시크릿
-
-### Flask 챗봇 백엔드
-- `GOOGLE_APPLICATION_CREDENTIALS` - Google Cloud 서비스 계정 키 파일 경로
-- `PROJECT_ID` - Google Cloud 프로젝트 ID
-- `LOCATION` - Vertex AI 지역 설정
-
-### React 프론트엔드
-- `VITE_API_BASE_URL` - API 서버 기본 URL
-- `VITE_CHATBOT_API_URL` - 챗봇 API 서버 URL
-- `VITE_KAKAO_APP_KEY` - 카카오 앱 키
-
-## 🆕 최신 업데이트 (v2.0)
-- AI 챗봇 시스템 - Google Gemini 기반 실시간 고객 지원
-### 새로운 기능
-- **AI 챗봇 시스템** - Google Gemini 기
+- パスワードのハッシュ化（BCrypt）など、セキュリティ面の強化
+- チャットボットのFAQ・サービス情報をRAGで参照し、より具体的な回答を返す仕組み
+- 自動テストの拡充
