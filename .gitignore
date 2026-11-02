@@ -38,3 +38,16 @@ out/
 
 back/src/main/resources/application.properties
 
+
+### Secrets ###
+.env
+.env.*
+!.env.example
+application_default_credentials.json
+*credentials*.json
+
+### Python ###
+venv/
+.venv/
+__pycache__/
+*.pyc

@@ -29,8 +29,10 @@ CORS(app,
      supports_credentials=True)
 
 # --- Google Cloud 인증 ---
-SERVICE_ACCOUNT_KEY_FILE = "application_default_credentials.json"
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = SERVICE_ACCOUNT_KEY_FILE
+# 인증 정보는 리포지토리에 포함하지 않습니다.
+# 환경 변수 GOOGLE_APPLICATION_CREDENTIALS 로 인증 파일 경로를 지정하세요.
+if not os.environ.get("GOOGLE_APPLICATION_CREDENTIALS"):
+    print("[경고] GOOGLE_APPLICATION_CREDENTIALS 가 설정되지 않았습니다. Application Default Credentials 를 사용합니다.")
 
 # --- GenAI Client ---
 genai_client = genai.Client(
